@@ -25,6 +25,23 @@ public class GoodsController {
     @Reference
     private GoodsService goodsService;
 
+    /**
+     * @Description //TODO tangyucong
+     * @Date 15:47 2018/9/11 商品上下架
+     * @Param [ids, marketable]
+     * @return entity.Result
+     */
+    @RequestMapping("/updateMarketable")
+    public Result updateMarketable(Long[] ids,String marketable){
+        try {
+            goodsService.updateMarketable(ids,marketable);
+            return new Result(true,"成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result(false,"商品未审核");
+        }
+    }
+
 
     @RequestMapping("/search")
     public PageResult search(@RequestBody TbGoods goods, int page, int rows) {

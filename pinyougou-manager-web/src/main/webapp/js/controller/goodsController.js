@@ -1,21 +1,33 @@
 //控制层
-app.controller('goodsController', function ($scope, $controller, goodsService, itemCatService) {
+app.controller('goodsController', function ($scope, $controller, $location, goodsService, itemCatService) {
 
     $controller('baseController', {$scope: $scope});//继承\
 
+    $scope.entity = {goods: {}, goodsDesc: {itemImages: [], specificationItems: []}};
 
     $scope.status = ['未审核', '已审核', '审核未通过', '关闭'];
 
     $scope.itemCatList = [];
 
-    $scope.findItemCatList = function () {
-        itemCatService.findAll().success(function (response) {
-            for (var i=0;i<response.length;i++){
-                $scope.itemCatList[response[i].id]=response[i].name;
+    $scope.updateStatus=function(status){
+
+        goodsService.updateStatus($scope.selectIds,status).success(function (response) {
+            if (response.success){
+                $scope.reloadList();
+                $scope.selectIds=[];
+            }else {
+                alert(response.message);
             }
         })
-    }
+    };
 
+    $scope.findItemCatList = function () {
+        itemCatService.findAll().success(function (response) {
+            for (var i = 0; i < response.length; i++) {
+                $scope.itemCatList[response[i].id] = response[i].name;
+            }
+        })
+    };
 
     //读取列表数据绑定到表单中
     $scope.findAll = function () {
@@ -34,16 +46,29 @@ app.controller('goodsController', function ($scope, $controller, goodsService, i
                 $scope.paginationConf.totalItems = response.total;//更新总记录数
             }
         );
-    }
+    };
+
+    $scope.entity.itemList = [{spec: {}, price: 0, num: 99999, status: '0', isDefault: '0'}];
 
     //查询实体
-    $scope.findOne = function (id) {
+    $scope.findOne = function () {
+        var id = $location.search()['id'];
+        if (id == null) {
+            return;
+        }
         goodsService.findOne(id).success(
             function (response) {
                 $scope.entity = response;
+                $scope.entity.goodsDesc.itemImages = JSON.parse($scope.entity.goodsDesc.itemImages);
+                $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.entity.goodsDesc.customAttributeItems);
+                $scope.entity.goodsDesc.specificationItems = JSON.parse($scope.entity.goodsDesc.specificationItems);
+                for (var i = 0; i < $scope.entity.itemList.length; i++) {
+                    $scope.entity.itemList[i].spec = JSON.parse($scope.entity.itemList[i].spec);
+                }
+
             }
         );
-    }
+    };
 
     //保存
     $scope.save = function () {

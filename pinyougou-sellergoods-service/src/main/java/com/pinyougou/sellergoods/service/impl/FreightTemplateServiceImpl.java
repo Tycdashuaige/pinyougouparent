@@ -11,6 +11,7 @@ import com.pinyougou.pojo.TbFreightTemplateExample.Criteria;
 import com.pinyougou.sellergoods.service.FreightTemplateService;
 
 import entity.PageResult;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 服务实现层
@@ -18,6 +19,7 @@ import entity.PageResult;
  *
  */
 @Service
+@Transactional
 public class FreightTemplateServiceImpl implements FreightTemplateService {
 
 	@Autowired

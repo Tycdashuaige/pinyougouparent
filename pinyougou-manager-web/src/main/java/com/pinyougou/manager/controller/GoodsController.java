@@ -23,6 +23,26 @@ public class GoodsController {
 	@Reference
 	private GoodsService goodsService;
 
+
+	/**
+	 * @Description //TODO tangyucong
+	 * @Date 14:57 2018/9/11 审核
+	 * @Param [ids, status]
+	 * @return entity.Result
+	 */
+	@RequestMapping("/updateStatus")
+	public Result updateStatus(Long[] ids,String status){
+
+		try {
+			goodsService.updateStatus(ids,status);
+			return new Result(true,"成功");
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new Result(false,"失败");
+		}
+	}
+
+
 	/**
 	 * 返回全部列表
 	 * @return

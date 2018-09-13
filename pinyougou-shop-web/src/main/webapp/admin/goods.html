@@ -47,10 +47,10 @@
         <div class="pull-left">
             <div class="form-group form-inline">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-default" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
-                    <button type="button" class="btn btn-default" title="审核通过"><i class="fa fa-check"></i> 审核通过</button>
-                    <button type="button" class="btn btn-default" title="驳回"><i class="fa fa-ban"></i> 驳回</button>
-                    <button type="button" class="btn btn-default" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
+                    <button type="button" class="btn btn-default" ng-click="dele()" title="删除"><i class="fa fa-trash-o"></i> 删除</button>
+                    <button type="button" class="btn btn-default" ng-click="updateMarketable('1')" title="上架"><i class="fa fa-check"></i> 上架</button>
+                    <button type="button" class="btn btn-default" ng-click="updateMarketable('2')" title="下架"><i class="fa fa-ban"></i> 下架</button>
+                    <button type="button" class="btn btn-default" ng-click="reloadList()" title="刷新"><i class="fa fa-refresh"></i> 刷新</button>
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@
             </thead>
             <tbody>
             <tr ng-repeat="entity in list">
-                <td><input type="checkbox"></td>
+                <td><input type="checkbox" ng-click="updateSelection($event,entity.id,entity.auditStatus)"></td>
                 <td>{{entity.id}}</td>
                 <td>{{entity.goodsName}}</td>
                 <td>{{entity.price}}</td>

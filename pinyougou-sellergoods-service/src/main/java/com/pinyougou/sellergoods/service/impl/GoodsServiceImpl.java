@@ -18,6 +18,7 @@ import com.pinyougou.pojo.TbGoodsExample.Criteria;
 import com.pinyougou.sellergoods.service.GoodsService;
 
 import entity.PageResult;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 服务实现层
@@ -25,6 +26,7 @@ import entity.PageResult;
  * @author Administrator
  */
 @Service
+@Transactional
 public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
@@ -45,7 +47,7 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private TbItemCatMapper itemCatMapper;
 
-    private void saveitemList(Goods goods){
+    private void saveitemList(Goods goods) {
         if ("1".equals(goods.getGoods().getIsEnableSpec())) {
             for (TbItem item : goods.getItemList()) {
                 String title = goods.getGoods().getGoodsName();
@@ -67,6 +69,37 @@ public class GoodsServiceImpl implements GoodsService {
             item.setSpec("{}");
             this.setItemValus(goods, item);
             itemMapper.insert(item);
+        }
+    }
+
+    /**
+     * @Description //TODO tangyucong
+     * @Date 15:48 2018/9/11 商品上下架
+     * @Param [ids, marketable]
+     * @return void
+     */
+    @Override
+    public void updateMarketable(Long[] ids, String marketable) {
+        for (Long id : ids) {
+            TbGoods goods = goodsMapper.selectByPrimaryKey(id);
+            goods.setIsMarketable(marketable);
+            goodsMapper.updateByPrimaryKey(goods);
+        }
+    }
+
+
+    /**
+     * @Description //TODO tangyucong
+     * @Date 15:47 2018/9/11
+     * @Param [ids, status] 商品审核
+     * @return void
+     */
+    @Override
+    public void updateStatus(Long[] ids, String status) {
+        for (Long id : ids) {
+            TbGoods goods = goodsMapper.selectByPrimaryKey(id);
+            goods.setAuditStatus(status);
+            goodsMapper.updateByPrimaryKey(goods);
         }
     }
 
@@ -172,7 +205,9 @@ public class GoodsServiceImpl implements GoodsService {
     @Override
     public void delete(Long[] ids) {
         for (Long id : ids) {
-            goodsMapper.deleteByPrimaryKey(id);
+            TbGoods goods = goodsMapper.selectByPrimaryKey(id);
+            goods.setIsDelete("1");
+            goodsMapper.updateByPrimaryKey(goods);
         }
     }
 
@@ -209,7 +244,7 @@ public class GoodsServiceImpl implements GoodsService {
             if (goods.getIsDelete() != null && goods.getIsDelete().length() > 0) {
                 criteria.andIsDeleteLike("%" + goods.getIsDelete() + "%");
             }
-
+            criteria.andIsDeleteIsNull();
         }
 
         Page<TbGoods> page = (Page<TbGoods>) goodsMapper.selectByExample(example);

@@ -12,6 +12,21 @@ import entity.PageResult;
 public interface GoodsService {
 
 	/**
+	 * @Description //TODO tangyucong
+	 * @Date 15:48 2018/9/11 商品上下架
+	 * @Param [ids, marketable]
+	 * @return void
+	 */
+	public void updateMarketable(Long[] ids,String marketable);
+
+	/**
+	 * @Description //TODO tangyucong
+	 * @Date 15:48 2018/9/11 商品审核
+	 * @Param [ids, status]
+	 * @return void
+	 */
+	public void updateStatus(Long[] ids,String status);
+	/**
 	 * 返回全部列表
 	 * @return
 	 */
