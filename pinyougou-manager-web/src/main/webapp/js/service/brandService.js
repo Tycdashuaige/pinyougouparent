@@ -5,7 +5,7 @@ app.service('brandService',function($http){
 	this.findAll=function(){
 		return $http.get('../brand/findAll.do');		
 	}
-	//分页 
+	/*//分页
 	this.findPage=function(page,rows){
 		return $http.get('../brand/findPage.do?page='+page+'&rows='+rows);
 	}
@@ -32,5 +32,5 @@ app.service('brandService',function($http){
 
 	this.selectOptionList=function () {
 		return $http.get('../brand/selectOptionList.do');
-    }
+    }*/
 });

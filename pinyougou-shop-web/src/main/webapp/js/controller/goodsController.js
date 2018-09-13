@@ -3,6 +3,32 @@ app.controller('goodsController', function ($scope, $controller, $location, good
 
     $controller('baseController', {$scope: $scope});//继承
 
+    $scope.updateMarketable = function (marketable) {
+        var flag = true;
+        $scope.loseStatus = [];
+        for (var i = 0; i < $scope.selectStatus.length; i++) {
+            if ($scope.selectStatus[i] != 1) {
+                flag = false;
+                $scope.loseStatus.push($scope.selectStatus[i]);
+            }
+        }
+        if (flag) {
+            goodsService.updateMarketable($scope.selectIds, marketable).success(function (response) {
+                if (response.success) {
+                    $scope.reloadList();
+                    $scope.selectIds = [];
+                } else {
+                    alert(response.message);
+                }
+            })
+        }else {
+            alert("商品ID为"+$scope.selectIds+"未通过审核");
+            $scope.selectIds=[];
+            $scope.loseStatus=[];
+            $scope.reloadList();
+        }
+
+    };
 
     $scope.checkAttributeValue = function (specName, optionName) {
         var items = $scope.entity.goodsDesc.specificationItems;
@@ -10,7 +36,7 @@ app.controller('goodsController', function ($scope, $controller, $location, good
         if (obj == null) {
             return false;
         } else {
-            if (obj.attributeValue.indexOf(optionName)>=0) {
+            if (obj.attributeValue.indexOf(optionName) >= 0) {
                 return true;
             } else {
                 return false;
@@ -162,17 +188,17 @@ app.controller('goodsController', function ($scope, $controller, $location, good
                 $scope.entity.goodsDesc.itemImages = JSON.parse($scope.entity.goodsDesc.itemImages);
                 $scope.entity.goodsDesc.customAttributeItems = JSON.parse($scope.entity.goodsDesc.customAttributeItems);
                 $scope.entity.goodsDesc.specificationItems = JSON.parse($scope.entity.goodsDesc.specificationItems);
-                for (var i=0;i<$scope.entity.itemList.length;i++){
-                    $scope.entity.itemList[i].spec=JSON.parse($scope.entity.itemList[i].spec);
+                for (var i = 0; i < $scope.entity.itemList.length; i++) {
+                    $scope.entity.itemList[i].spec = JSON.parse($scope.entity.itemList[i].spec);
                 }
-                
+
             }
         );
     };
 
     //保存
     $scope.save = function () {
-        $scope.entity.goodsDesc.introduction=editor.html();
+        $scope.entity.goodsDesc.introduction = editor.html();
         var serviceObject;//服务层对象
         $scope.entity.goodsDesc.introduction = editor.html();
         if ($scope.entity.goods.id != null) {//如果有ID
@@ -185,7 +211,7 @@ app.controller('goodsController', function ($scope, $controller, $location, good
                 if (response.success) {
                     $scope.entity = {};
                     editor.html('');
-                    location.href="goods.html";
+                    location.href = "goods.html";
                 } else {
                     alert(response.message);
                 }

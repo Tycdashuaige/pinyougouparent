@@ -11,6 +11,7 @@ import com.pinyougou.pojo.TbPayLogExample.Criteria;
 import com.pinyougou.sellergoods.service.PayLogService;
 
 import entity.PageResult;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 服务实现层
@@ -18,6 +19,7 @@ import entity.PageResult;
  *
  */
 @Service
+@Transactional
 public class PayLogServiceImpl implements PayLogService {
 
 	@Autowired
