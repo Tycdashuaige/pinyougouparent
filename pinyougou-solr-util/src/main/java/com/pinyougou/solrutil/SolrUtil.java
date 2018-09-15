@@ -1,7 +1,6 @@
 package com.pinyougou.solrutil;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.pinyougou.mapper.TbItemMapper;
 import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojo.TbItemExample;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.solr.core.SolrTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 

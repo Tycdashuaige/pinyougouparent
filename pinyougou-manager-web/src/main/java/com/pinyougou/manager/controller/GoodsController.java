@@ -1,7 +1,10 @@
 package com.pinyougou.manager.controller;
+import java.util.Arrays;
 import java.util.List;
 
+import com.pinyougou.pojo.TbItem;
 import com.pinyougou.pojogroup.Goods;
+import com.pinyougou.search.service.ItemSearchService;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +26,9 @@ public class GoodsController {
 	@Reference
 	private GoodsService goodsService;
 
+	@Reference
+	private ItemSearchService itemSearchService;
+
 
 	/**
 	 * @Description //TODO tangyucong
@@ -35,6 +41,15 @@ public class GoodsController {
 
 		try {
 			goodsService.updateStatus(ids,status);
+
+			if (status.equals("1")){
+				List<TbItem> list = goodsService.findItemListByGoodsIdandStatus(ids, status);
+				if (list.size()>0){
+					itemSearchService.importList(list);
+				}else {
+					System.out.println("没有明细数据");
+				}
+			}
 			return new Result(true,"成功");
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,6 +128,7 @@ public class GoodsController {
 	public Result delete(Long [] ids){
 		try {
 			goodsService.delete(ids);
+			itemSearchService.deleteByGoodsIds(Arrays.asList(ids));
 			return new Result(true, "删除成功");
 		} catch (Exception e) {
 			e.printStackTrace();
