@@ -114,37 +114,6 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     /**
-     * @Description //TODO tangyucong
-     * @Date 15:48 2018/9/11 商品上下架
-     * @Param [ids, marketable]
-     * @return void
-     */
-    @Override
-    public void updateMarketable(Long[] ids, String marketable) {
-        for (Long id : ids) {
-            TbGoods goods = goodsMapper.selectByPrimaryKey(id);
-            goods.setIsMarketable(marketable);
-            goodsMapper.updateByPrimaryKey(goods);
-        }
-    }
-
-
-    /**
-     * @Description //TODO tangyucong
-     * @Date 15:47 2018/9/11
-     * @Param [ids, status] 商品审核
-     * @return void
-     */
-    @Override
-    public void updateStatus(Long[] ids, String status) {
-        for (Long id : ids) {
-            TbGoods goods = goodsMapper.selectByPrimaryKey(id);
-            goods.setAuditStatus(status);
-            goodsMapper.updateByPrimaryKey(goods);
-        }
-    }
-
-    /**
      * 查询全部
      */
     @Override
