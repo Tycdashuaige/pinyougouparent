@@ -1,6 +1,6 @@
 package com.pinyougou.shop.controller;
 
-import com.pinyougou.utils.FastDFSClient;
+import com.pinyougou.util.FastDFSClient;
 import entity.Result;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;

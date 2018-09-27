@@ -107,10 +107,9 @@
             <artifactId>pinyougou-content-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-
         <dependency>
             <groupId>com.pinyougou</groupId>
-            <artifactId>pinyougou-search-interface</artifactId>
+            <artifactId>pinyougou-seckill-interface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
@@ -122,6 +121,13 @@
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-config</artifactId>
+        </dependency>
+
+        <!--activeMQ-->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+            <version>5.13.4</version>
         </dependency>
 
     </dependencies>
